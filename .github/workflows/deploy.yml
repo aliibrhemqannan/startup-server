@@ -41,4 +41,4 @@ jobs:
           docker pull aliqannan/api-server:v1 
           docker stop c-api-server || true
           docker rm c-api-server || true
-          docker run -d --name c-api-server aliqannan/api-server:v1
+          docker run -d --name c-api-server  -p 3000:3000  aliqannan/api-server:v1
