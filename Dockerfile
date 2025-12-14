@@ -15,4 +15,4 @@ COPY . .
 EXPOSE 3000
 
 # تشغيل التطبيق
-CMD ["node", "index.js"]
+CMD ["node", "server.js"]
