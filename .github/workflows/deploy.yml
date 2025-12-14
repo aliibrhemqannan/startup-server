@@ -39,6 +39,6 @@ jobs:
         port: 22
         script: |
           docker pull aliqannan/api-server:v1 
-          docker stop your-running-container || true
-          docker rm your-running-container || true
+          docker stop api-server || true
+          docker rm api-server || true
           docker run -d --name c-api-serverapi-server:v1
