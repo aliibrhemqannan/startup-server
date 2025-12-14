@@ -1,0 +1,44 @@
+name: Deploy to OVH Server
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v1
+
+    - name: Login to Docker Hub
+      uses: docker/login-action@v2
+      with:
+        username: ${{ secrets.DOCKER_USERNAME }}
+        password: ${{ secrets.DOCKER_PASSWORD }}
+
+    - name: Build Docker image
+      run: |
+        docker build -t api-server:v1 .
+
+    - name: Push Docker image to Docker Hub
+      run: |
+        docker push api-server:v1 
+
+    - name: SSH to OVH and deploy
+      uses: appleboy/ssh-action@v0.1.5
+      with:
+        host: ${{ secrets.OVH_HOST }}
+        username: ${{ secrets.OVH_USERNAME }}
+        password: ${{ secrets.OVH_PASSWORD }}
+        port: 22
+        script: |
+          docker pull api-server:v1 
+          docker stop your-running-container || true
+          docker rm your-running-container || true
+          docker run -d --name c-api-serverapi-server:v1
