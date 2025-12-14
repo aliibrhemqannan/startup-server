@@ -35,7 +35,7 @@ jobs:
       with:
         host: ${{ secrets.OVH_HOST }}
         username: ${{ secrets.OVH_USERNAME }}
-        password: ${{ secrets.OVH_PASSWORD }}
+        key: ${{ secrets.OVH_SSH_KEY }}
         port: 22
         script: |
           docker pull aliqannan/api-server:v1 
