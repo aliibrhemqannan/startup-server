@@ -24,11 +24,11 @@ jobs:
 
     - name: Build Docker image
       run: |
-        docker build -t api-server:v1 .
+        docker build -t aliqannan/api-server:v1 .
 
     - name: Push Docker image to Docker Hub
       run: |
-        docker push api-server:v1 
+        docker push aliqannan/api-server:v1 
 
     - name: SSH to OVH and deploy
       uses: appleboy/ssh-action@v0.1.5
@@ -38,7 +38,7 @@ jobs:
         password: ${{ secrets.OVH_PASSWORD }}
         port: 22
         script: |
-          docker pull api-server:v1 
+          docker pull aliqannan/api-server:v1 
           docker stop your-running-container || true
           docker rm your-running-container || true
           docker run -d --name c-api-serverapi-server:v1
