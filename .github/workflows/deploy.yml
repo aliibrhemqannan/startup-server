@@ -1,9 +1,8 @@
-
 name: Sync to GitLab
 
 on:
   push:
-    branches: [ main, master ] # سيعمل عند الـ Push على فرع main أو master
+    branches: [ main, master ] # سيعمل التحديث تلقائياً عند الـ Push على هذه الفروع
 
 jobs:
   sync-code:
@@ -12,9 +11,9 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v4
         with:
-          fetch-depth: 0 # لجلب كامل تاريخ المشروع والفروع
+          fetch-depth: 0
 
       - name: Push Code to GitLab Docker Server
         run: |
-          # نقوم بالدفع المباشر المجبور للمستودع على سيرفرك
-          git push --force --prune https://aliqannan:${{ secrets.GITLAB_PASSWORD }}@91.134.134.106/aliqannan/startup-server.git refs/remotes/origin/*:refs/heads/* refs/tags/*:refs/tags/*
+          # المزامنة المباشرة والدفع القسري لسيرفر الـ Docker الخاص بك
+          git push --force --prune http://aliqannan:${{ secrets.GITLAB_PASSWORD }}@91.134.134.106/aliqannan/startup-server.git refs/remotes/origin/*:refs/heads/* refs/tags/*:refs/tags/*
